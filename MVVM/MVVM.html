@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div id="app">
+      <input type="text" v-model="message.name">
+      <div>
+        {{message.name}}
+      </div>
+      年龄：{{age}}
+    </div>
+    <script src="watcher.js" charset="utf-8"></script>
+    <script src="observer.js" charset="utf-8"></script>
+    <script src="compile.js" charset="utf-8"></script>
+    <script src="MVVM.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      /* 整体思路
+      1.模板的编译complie 
+      2.数据劫持observer 观察数据变化 
+      3.Watcher搭起Observer和Compile之间的通信桥梁,，达到数据变化 -> 视图更新；视图交互变化(input) -> 数据model变更的双向绑定效果。 */
+      let vm = new MVVM({
+        el: '#app',
+        data:{
+          message: {
+            name: 'bsb'
+          },
+          age: 2
+        }
+      })
+    </script>
+  </body>
+</html>

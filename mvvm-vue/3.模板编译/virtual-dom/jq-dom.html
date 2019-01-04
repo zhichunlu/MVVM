@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!---www.bootcdn.cn-->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <button id="btn-change">change</button>
+    <script>
+        let data = [{
+            name: 'new',
+            age: 1,
+            address: '北京'
+        },{
+            name: 'hello',
+            age: 2,
+            address: '上海'
+        },{
+            name: 'world',
+            age: 3,
+            address: '深圳'
+        }]   
+        //渲染函数
+        function render(data){
+            let $container = $('#container');
+            $container.html('');
+
+            //拼接table
+            let $table = $('<table>');
+            $table.append($('<tr><td>name</td><td>age</td><td>address</td></tr>'));
+            data.forEach(item => {
+                $table.append($(`<tr><td>${item.name}</td><td>${item.age}</td><td>${item.address}</td></tr>`));
+            });
+
+            $container.append($table);
+        } 
+        render(data);
+        $('#btn-change').on('click', function(){
+            data[1].age = 4;
+            data[2].address = '杭州';
+            render(data);
+        })
+    </script>
+</body>
+</html>

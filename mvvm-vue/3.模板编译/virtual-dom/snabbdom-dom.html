@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!---www.bootcdn.cn-->
+    <script src="./node_modules/snabbdom/dist/snabbdom.js"></script>
+    <script src="./node_modules/snabbdom/dist/snabbdom-class.js"></script>
+    <script src="./node_modules/snabbdom/dist/snabbdom-props.js"></script>
+    <script src="./node_modules/snabbdom/dist/snabbdom-style.js"></script>
+    <script src="./node_modules/snabbdom/dist/snabbdom-eventlisteners.js"></script>
+    <script src="./node_modules/snabbdom/dist/h.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <button id="btn-change">change</button>
+    <script>
+        let snabbdom = window.snabbdom;
+
+        //定义patch
+        let patch = snabbdom.init([
+            snabbdom_class,
+            snabbdom_props,
+            snabbdom_style,
+            snabbdom_eventlisteners
+        ])
+
+        //定义h
+        let h = snabbdom.h;
+
+        let data = [{
+            name: 'new',
+            age: 1,
+            address: '北京'
+        },{
+            name: 'hello',
+            age: 2,
+            address: '上海'
+        },{
+            name: 'world',
+            age: 3,
+            address: '深圳'
+        }] 
+        let container = document.getElementById('container')
+        let btnChange = document.getElementById('btn-change')
+         
+        data.unshift({
+            name: '姓名',
+            age: '年龄',
+            address: '地址'
+        });
+        let vnode;
+
+        function render(data){
+            let newVnode = h('table', {}, data.map(item => {
+                let tds = [];
+                for(let i in item){
+                    tds.push(h('td', {}, item[i])) 
+                }
+                return h('tr', {}, tds);
+            }));
+
+            if(vnode){
+                patch(vnode, newVnode);
+            } else {
+                patch(container, newVnode);
+            }
+            vnode = newVnode;
+        }
+
+        render(data);
+        btnChange.addEventListener('click', function(){
+            data[1].age = 4;
+            data[2].address = '杭州';
+            render(data);
+        })
+    </script>
+</body>
+</html>

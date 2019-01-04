@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <input type="text" name="" id="txt-title">
+        <button id="btn-submit">submit</button>
+    </div>
+    <div>
+        <ul id="ul-list"></ul>
+    </div>
+    <!---www.bootcdn.cn-->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        var txtTitle = $('#txt-title'),
+            ulList = $('#ul-list'),
+            btnSubmit = $('#btn-submit');
+
+        btnSubmit.click(function(){
+            var title = txtTitle.val();
+            var liHtml = $('<li>' + title + '</li>');
+            ulList.append(liHtml);
+            txtTitle.val('');
+        })
+
+    </script>
+</body>
+</html>

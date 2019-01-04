@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!---www.bootcdn.cn-->
+    <script src="./node_modules/snabbdom/dist/snabbdom.js"></script>
+    <script src="./node_modules/snabbdom/dist/snabbdom-class.js"></script>
+    <script src="./node_modules/snabbdom/dist/snabbdom-props.js"></script>
+    <script src="./node_modules/snabbdom/dist/snabbdom-style.js"></script>
+    <script src="./node_modules/snabbdom/dist/snabbdom-eventlisteners.js"></script>
+    <script src="./node_modules/snabbdom/dist/h.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <button id="btn-change">change</button>
+    <script>
+        let snabbdom = window.snabbdom;
+
+        //定义patch
+        let patch = snabbdom.init([// 初始化补丁功能与选定的模块
+            snabbdom_class,// 使切换class变得容易
+            snabbdom_props,// 用于设置DOM元素的属性
+            snabbdom_style,// 处理元素的style，支持动画
+            snabbdom_eventlisteners // 事件监听器
+        ])
+
+        //定义h
+        let h = snabbdom.h; //用于创建vnode,VUE中render(createElement)的原形
+        let container = document.getElementById('container');
+
+        //定义 vnode
+        let vnode = h('ul#list', {}, [
+            h('li.item', {}, 'Itenm 1'),
+            h('li.item', {}, 'Itenm 2')
+        ])
+
+        // 第一次打补丁，用于渲染到页面，内部会建立关联关系，减少了创建oldvnode过程
+        patch(container, vnode);
+        document.getElementById('btn-change').addEventListener('click', function(){
+            //创建新节点
+            let newVnode = h('ul#list', {}, [
+                h('li.item', {}, 'Itenm 1'),
+                h('li.item', {}, 'Itenm 3'),
+                h('li.item', {}, 'Itenm 2')
+            ])
+            
+            //第二次比较，上一次vnode比较，打补丁到页面
+            //VUE的patch在nextTick中，开启异步队列，删除了不必要的patch
+            patch(vnode, newVnode)
+        })
+    </script>
+</body>
+</html>
